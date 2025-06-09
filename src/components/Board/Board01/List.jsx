@@ -1,8 +1,14 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Rock from '../../../assets/img/board/button_rock.svg'
 
 const List = () => {
+    const navigation = useNavigate();
+
+    const onDetail = (id) => {
+        navigation(`/detail/${id}`)
+    }
+
     return (
         <div className="list_wrap">
             <div className="top">
@@ -31,7 +37,7 @@ const List = () => {
                     <p className="date">25.01.01</p>
                     <p className="watch">조회수</p>
                 </div>
-                <div className="list">
+                <div className="list" onClick={() => { onDetail('5') }}>
                     <p className="number">5</p>
                     <div className="title_wrap">
                         <p className="tage">단편</p>
@@ -43,7 +49,7 @@ const List = () => {
                     <p className="date">25.01.01</p>
                     <p className="watch">조회수</p>
                 </div>
-                <div className="list">
+                <div className="list" onClick={() => { onDetail('4') }}>
                     <p className="number">4</p>
                     <div className="title_wrap">
                         <p className="tage">장편</p>
@@ -55,7 +61,7 @@ const List = () => {
                     <p className="date">25.01.01</p>
                     <p className="watch">조회수</p>
                 </div>
-                <div className="list">
+                <div className="list" onClick={() => { onDetail('3') }}>
                     <p className="number">3</p>
                     <div className="title_wrap">
                         <p className="tage">단편</p>

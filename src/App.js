@@ -12,6 +12,7 @@ import Header from './components/Section/Header'
 import Nav from './components/Section/Nav'
 import Board01 from './components/Board/Board01/Board01'
 import Write from './components/Board/Write/Write'
+import Detail from './components/Board/Detail/Detail'
 
 const App = () => {
     const [onlogin, setOnlogin] = useState(true);
@@ -37,6 +38,7 @@ const App = () => {
                 <Route path='/board03' element={<Main />} />
                 <Route path='/board04' element={<Main />} />
                 <Route path='/board05' element={<Main />} />
+                <Route path='/detail/:id' element={<Detail />} />
             </Routes>
         </BrowserRouter>
     )

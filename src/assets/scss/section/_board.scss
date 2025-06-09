@@ -5,6 +5,7 @@
         margin-bottom: 50px;
 
         .tag_wrap {
+            justify-content: center;
             display: flex;
             margin-bottom: 30px;
 
@@ -86,7 +87,8 @@
     }
 
     .main {
-        width: 750px;
+        width: inherit;
+        max-width: 750px;
 
         .list_wrap {
 
@@ -238,7 +240,7 @@
     .Editor {
         width: 100%;
         margin-bottom: 15px;
-        
+
         .ql-container {
             height: 350px;
         }
@@ -261,11 +263,80 @@
             border: 1px solid var(--white01);
         }
 
-        .upload {
-            background-color: var(--main);
-            color: var(--white);
-            width: 67px;
+        >div {
+            display: flex;
+
+            input {
+                width: 150px;
+                height: 35px;
+                margin-right: 10px;
+                font-size: 14px;
+            }
+
+            .upload {
+                background-color: var(--main);
+                color: var(--white);
+                width: 67px;
+            }
         }
+
+    }
+}
+
+.Detail_wrap {
+    position: relative;
+
+    >button {
+        position: absolute;
+        left: 10px;
+        top: 10px;
+        
+        img {
+            width: 20px;
+        }
+    }
+
+    >div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        img {
+            width: 50px;
+            margin-bottom: 15px;
+        }
+
+        h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        p {
+            margin-bottom: 20px;
+        }
+
+        >div {
+            display: flex;
+
+            input {
+                width: 200px;
+                height: 35px;
+                border-radius: 10px;
+                padding: 0 20px;
+                border: 1px solid var(--white01);
+                margin-right: 10px;
+            }
+
+            button {
+                background-color: var(--main);
+                width: 67px;
+                height: 35px;
+                border-radius: 10px;
+                color: var(--white);
+            }
+        }
+
     }
 }
 
