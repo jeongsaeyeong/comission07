@@ -53,7 +53,7 @@ const Write = () => {
                 <ReactQuill
                     theme="snow"
                     value={content}
-                    onChange={setContent}
+                    onChange={(e)=>{setContent(e.target.value)}}
                     modules={modules}
                     formats={formats}
                     placeholder='내용을 입력하세요'

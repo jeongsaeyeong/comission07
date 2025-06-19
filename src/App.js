@@ -13,6 +13,8 @@ import Nav from './components/Section/Nav'
 import Board01 from './components/Board/Board01/Board01'
 import Write from './components/Board/Write/Write'
 import Detail from './components/Board/Detail/Detail'
+import Board05 from './components/Board/Board05/Board05'
+import Detail05 from './components/Board/Board05/Detail'
 
 const App = () => {
     const [onlogin, setOnlogin] = useState(true);
@@ -34,10 +36,11 @@ const App = () => {
                 <Route path='/' element={<Main />} />
                 <Route path='/board01' element={<Board01 />} />
                 <Route path='/board_write' element={<Write />} />
-                <Route path='/board02' element={<Main />} />
-                <Route path='/board03' element={<Main />} />
-                <Route path='/board04' element={<Main />} />
-                <Route path='/board05' element={<Main />} />
+                <Route path='/board02' element={<Board01 />} />
+                <Route path='/board03' element={<Board01 />} />
+                <Route path='/board04' element={<Board01 />} />
+                <Route path='/board05' element={<Board05 />} />
+                <Route path='/board05/detail/:id' element={<Detail05 />} />
                 <Route path='/detail/:id' element={<Detail />} />
             </Routes>
         </BrowserRouter>
