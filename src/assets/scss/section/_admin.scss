@@ -1,0 +1,165 @@
+.Admin_wrap {
+    flex-direction: column;
+    justify-content: flex-start;
+    border-radius: 10px;
+    border: 1px solid var(--white01);
+    padding: 30px;
+
+    .top {
+        display: flex;
+        justify-content: space-between;
+        width: 315px;
+        margin-bottom: 50px;
+
+        button {
+            font-size: 20px;
+            color: var(--gray02);
+            font-weight: 600;
+        }
+
+        .click {
+            color: var(--black);
+        }
+    }
+
+    .Home_wrap {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+
+        button {
+            width: 53px;
+            height: 25px;
+            border-radius: 5px;
+            background-color: var(--main);
+            color: var(--white);
+            font-size: 12px;
+            font-weight: 400;
+        }
+
+        h3 {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        >div {
+            width: 48%;
+        }
+
+        >.left {
+            .top {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                >div {
+                    width: 48%;
+
+                    >div {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+
+                        p {
+                            font-size: 13px;
+                        }
+
+                        div {
+                            display: flex;
+                            align-items: center;
+
+                            label {
+                                width: 12px;
+                                height: 12px;
+                                border-radius: 10px;
+                                border: 1px solid var(--gray02);
+                                margin-right: 6px;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .bottom {
+                >div {
+                    display: flex;
+                    justify-content: space-between;
+                    margin-bottom: 10px;
+
+                    div {
+                        display: flex;
+                        align-items: center;
+
+                        input {
+                            display: none;
+                        }
+
+                        label {
+                            border: 1px solid var(--gray02);
+                            border-radius: 5px;
+                            width: 80px;
+                            height: 25px;
+                            font-size: 12px;
+                            display: flex;
+                            justify-content: left;
+                            align-items: center;
+                            padding-left: 10px;
+                            margin-right: 10px;
+                        }
+
+                        p {
+                            font-size: 13px;
+                            font-weight: 500;
+                        }
+                    }
+
+                }
+            }
+        }
+
+        >.right {
+            >div {
+                >div {
+                    display: flex;
+                    justify-content: space-between;
+                    margin-bottom: 30px;
+
+                    input {
+                        width: 307px;
+                        border: 1px solid var(--gray02);
+                        border-radius: 5px;
+                        font-size: 12px;
+                        padding: 0 10px;
+                    }
+                }
+            }
+
+            .notice {
+
+                >div {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-end;
+
+                    .quill {
+                        margin-bottom: 10px;
+
+                        .ql-editor {
+                            height: 220px;
+                        }
+
+                        button {
+                            background-color: var(--none);
+                            width: 28px;
+                        }
+                    }
+                }
+
+
+            }
+
+        }
+    }
+}

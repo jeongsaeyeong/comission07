@@ -15,6 +15,7 @@ import Write from './components/Board/Write/Write'
 import Detail from './components/Board/Detail/Detail'
 import Board05 from './components/Board/Board05/Board05'
 import Detail05 from './components/Board/Board05/Detail'
+import Admin from './components/Admin/Admin'
 
 const App = () => {
     const [onlogin, setOnlogin] = useState(true);
@@ -42,6 +43,10 @@ const App = () => {
                 <Route path='/board05' element={<Board05 />} />
                 <Route path='/board05/detail/:id' element={<Detail05 />} />
                 <Route path='/detail/:id' element={<Detail />} />
+
+                {/* admin */}
+
+                <Route path='/admin' element={<Admin />} />
             </Routes>
         </BrowserRouter>
     )

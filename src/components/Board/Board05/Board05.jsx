@@ -2,9 +2,12 @@ import React, { useState } from 'react'
 import Pagenation from '../ETC/Pagenation'
 import ThreadItem from './ThreadItem'
 import Exam from '../../../assets/img/board/example.png'
+import Write05 from '../Write/Write05'
 
 const Board05 = () => {
-    const [page, setPage] = useState(1)
+    const [page, setPage] = useState(1);
+    const [show, setShow] = useState(false);
+    const [big, setBig] = useState(false);
 
     return (
         <div className='Board05_wrap container_main'>
@@ -21,15 +24,16 @@ const Board05 = () => {
                     <div className="search">
                         <input type="text" placeholder='검색어' />
                         <button>검색</button>
-                        <button>업로드</button>
+                        <button onClick={() => { setShow(true) }}>업로드</button>
                     </div>
                     <Pagenation setPage={setPage} page={page} />
                 </div>
             </div>
             <div className="main">
-                <ThreadItem img={Exam} show={true}/>
-                <ThreadItem show={false}/>
+                <ThreadItem img={Exam} show={true} />
+                <ThreadItem show={false} />
             </div>
+            {show && <Write05 setShow={setShow} />}
         </div>
     )
 }
