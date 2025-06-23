@@ -2,9 +2,11 @@ import React, { useState } from 'react'
 import Home from './Home'
 import Board from './Board'
 import Member from './Member'
+import Delete from '../../assets/img/board/button_none.svg'
 
 const Admin = () => {
     const [click, setClick] = useState('home')
+    const [show, setShow] = useState(false);
 
     return (
         <div className='Admin_wrap container_main'>
@@ -16,8 +18,14 @@ const Admin = () => {
             <div className="main">
                 {click === 'home' && <Home />}
                 {click === 'board' && <Board />}
-                {click === 'member' && <Member />}
+                {click === 'member' && <Member setShow={setShow} />}
             </div>
+            {show &&
+                <div className='picture_wrap'>
+                    <button onClick={() => { setShow(false) }}><img src={Delete} alt="" /></button>
+                    <div>원본 이미지</div>
+                </div>
+            }
         </div>
     )
 }
