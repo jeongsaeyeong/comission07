@@ -16,6 +16,7 @@ import Detail from './components/Board/Detail/Detail'
 import Board05 from './components/Board/Board05/Board05'
 import Detail05 from './components/Board/Board05/Detail'
 import Admin from './components/Admin/Admin'
+import Mypage from './components/User/Mypage/Mypage'
 
 const App = () => {
     const [onlogin, setOnlogin] = useState(true);
@@ -32,6 +33,9 @@ const App = () => {
                 <Route path='/findpass' element={<FindPass />} />
                 <Route path='/pass_re' element={<FindPassRe />} />
                 <Route path='/pass_re_success' element={<FindPassSuccess />} />
+
+                {/* user-mypage */}
+                <Route path='/mypage' element={<Mypage />} />
 
                 {/* main */}
                 <Route path='/' element={<Main />} />

@@ -11,13 +11,21 @@
     }
 }
 
+.m_header {
+    display: none;
+}
+
 .Nav_wrap {
     display: flex;
     align-items: flex-start;
     height: 100%;
     margin-right: 10px;
 
-    >div {
+    .nav_m {
+        display: none;
+    }
+
+    .nav {
         display: flex;
         flex-direction: column;
         height: 400px;

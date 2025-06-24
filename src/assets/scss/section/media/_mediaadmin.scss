@@ -1,0 +1,112 @@
+@media (max-width: 800px) {
+    .Admin_wrap {
+        border: none;
+        margin: 0 auto;
+        width: 353px;
+        margin-top: 80px;
+        padding: 30px 0;
+
+        >.top {
+            width: 257px;
+
+            button {
+                font-size: 15px;
+            }
+        }
+
+        .main {
+            width: 100%;
+
+            .Home_wrap {
+                flex-direction: column;
+
+                >div {
+                    width: 100%;
+                    margin-bottom: 10px;
+                }
+
+                >.left {
+                    .top {
+                        margin-bottom: 20px;
+                    }
+
+                    .bottom {
+                        margin-bottom: 20px;
+                    }
+                }
+
+                >.right {
+                    >div {
+                        >div {
+
+                            input,
+                            label {
+                                width: 82%;
+                            }
+                        }
+                    }
+
+                    .notice {
+
+                        >div {
+                            display: flex;
+                            flex-direction: column;
+                            align-items: flex-end;
+
+                            .quill {
+                                margin-bottom: 10px;
+
+                                button {
+                                    width: 20px !important;
+                                }
+
+                                .ql-editor {
+                                    height: 220px;
+                                }
+
+                                button {
+                                    background-color: var(--none);
+                                    width: 28px;
+                                }
+                            }
+                        }
+
+
+                    }
+
+                }
+            }
+        }
+
+        .picture_wrap {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 5px;
+            background-color: #00000060;
+            width: 100%;
+            max-width: 420px;
+            min-width: 393px;
+            height: inherit;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+
+            button {
+                left: 25px;
+                top: 50px;
+
+                img {
+                    width: 20px;
+                }
+            }
+
+            div {
+                margin-top: 150px;
+                width: 350px;
+                height: 300px;
+            }
+        }
+    }
+}

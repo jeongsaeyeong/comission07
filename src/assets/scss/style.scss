@@ -6,8 +6,13 @@
 @use "setting/vars";
 
 // section
-
 @use "section/user";
 @use "section/main";
 @use "section/board";
 @use "section/admin";
+
+//media
+@use "section/media/mediauser";
+@use "section/media/mediamain";
+@use "section/media/mediaadmin";
+@use "section/media/mediaboard";

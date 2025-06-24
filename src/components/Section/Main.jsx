@@ -1,10 +1,14 @@
 import React from 'react'
 import Profile from '../../assets/img/main/icon_user.png'
 import { Link } from 'react-router-dom'
+import Header from './Header'
 
 const Main = () => {
     return (
         <div className='Main_wrap container_main'>
+            <div className='m_header'>
+                <Header />
+            </div>
             <div className="left">
                 <h2>메인 공지</h2>
                 <p>공지에 들어가는 내용</p>
