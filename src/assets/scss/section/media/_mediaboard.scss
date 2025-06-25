@@ -220,6 +220,8 @@
     }
 
     .Detail_wrap {
+        width: 100%;
+
         .detail_header {
             .back {
                 img {
@@ -229,6 +231,7 @@
         }
 
         .no_wrap {
+            margin: 0 auto;
             height: 60px;
 
             img {
