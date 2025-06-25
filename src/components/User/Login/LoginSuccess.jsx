@@ -5,7 +5,7 @@ const LoginSuccess = () => {
     return (
         <div className='Login_wrap LoginSuccess_wrap container'>
             <div className="img"></div>
-            <Link to='/main'>입장하기</Link>
+            <Link to='/'>입장하기</Link>
         </div>
     )
 }

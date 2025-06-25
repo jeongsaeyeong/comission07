@@ -39,12 +39,12 @@ const App = () => {
 
                 {/* main */}
                 <Route path='/' element={<Main />} />
-                <Route path='/board01' element={<Board01 />} />
-                <Route path='/board_write' element={<Write />} />
-                <Route path='/board02' element={<Board01 />} />
-                <Route path='/board03' element={<Board01 />} />
-                <Route path='/board04' element={<Board01 />} />
+                <Route path='/board/:number' element={<Board01 />} />
+                <Route path='/board/:number/:admin' element={<Board01 />} />
                 <Route path='/board05' element={<Board05 />} />
+                <Route path='/board05/:admin' element={<Board05 />} />
+                <Route path='/board_write/:number' element={<Write />} />
+                <Route path='/board_write/:number/:admin' element={<Write />} />
                 <Route path='/board05/detail/:id' element={<Detail05 />} />
                 <Route path='/detail/:id' element={<Detail />} />
 

@@ -1,14 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Down from '../../../assets/img/board/button_down.svg'
 
-const Top = () => {
+const Top = ({ params }) => {
+    const [click, setClick] = useState('all');
+
     return (
         <div className="top">
-            <div className="tag_wrap">
-                <button>전체<strong>(999+)</strong></button>
-                <button>단편<strong>(999+)</strong></button>
-                <button>장편<strong>(999+)</strong></button>
-            </div>
+            {params.number === '01' &&
+                <div className="tag_wrap">
+                    <button className={click === 'all' ? 'click' : ''} onClick={() => { setClick('all') }}>전체<strong>(999+)</strong></button>
+                    <button className={click === 'short' ? 'click' : ''} onClick={() => { setClick('short') }}>단편<strong>(999+)</strong></button>
+                    <button className={click === 'long' ? 'click' : ''} onClick={() => { setClick('long') }}>장편<strong>(999+)</strong></button>
+                </div>
+            }
             <div className="search_wrap">
                 <div className="cate">
                     <select>

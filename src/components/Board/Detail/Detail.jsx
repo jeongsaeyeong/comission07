@@ -14,6 +14,7 @@ const Detail = () => {
     const [needpass, setNeedpass] = useState(false);
     const [pass, setPass] = useState('');
     const [manage, setManage] = useState(false)
+    const [page, setPage] = useState(1);
 
     useEffect(() => {
         if (params.id === '5') {
@@ -36,7 +37,7 @@ const Detail = () => {
             {needpass || rock ? (<></>) : (
                 <>
                     <Show />
-                    <Pagenation />
+                    <Pagenation setPage={setPage} page={page}/>
                 </>
             )}
             {rock && (

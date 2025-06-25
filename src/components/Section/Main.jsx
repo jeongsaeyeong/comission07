@@ -1,12 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Profile from '../../assets/img/main/icon_user.png'
 import { Link } from 'react-router-dom'
 import Header from './Header'
-
+import { TwitterTweetEmbed } from 'react-twitter-embed'
 const Main = () => {
+
+
     return (
-        <div className='Main_wrap container_main'>
-            <div className='m_header'>
+        <div className="Main_wrap container_main">
+            <div className="m_header">
                 <Header />
             </div>
             <div className="left">
@@ -20,11 +22,15 @@ const Main = () => {
                     </div>
                     <div className="info">
                         <h3>천사님</h3>
-                        <p className='point'>500p</p>
-                        <Link to='/mypage'>프로필 관리</Link>
+                        <p className="point">500p</p>
+                        <Link to="/mypage">프로필 관리</Link>
                     </div>
                 </div>
-                <div className="bottom">트위터</div>
+                <div className="bottom">
+                    <div>
+                        <TwitterTweetEmbed tweetId={'1936985273533087768'} />
+                    </div>
+                </div>
             </div>
         </div>
     )

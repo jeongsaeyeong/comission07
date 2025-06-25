@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Left from '../../../assets/img/board/button_left.svg'
 import Right from '../../../assets/img/board/button_right.svg'
+import { useLocation } from 'react-router-dom'
 
 const Pagenation = ({ setPage, page }) => {
 
@@ -13,14 +14,18 @@ const Pagenation = ({ setPage, page }) => {
     }
 
     const onRight = () => {
-        if (5 > page > 1) {
-            setPage(page + 1);
-        } else if (page === 1) {
-            setPage(1)
-        } else if (page === 5) {
+        if (page < 5) {
+            setPage(page + 1)
+        } else {
             setPage(5)
         }
     }
+
+    const location = useLocation()
+
+    useEffect(() => {
+        setPage(1)
+    }, [location.pathname])
 
     return (
         <div className="Pagenation_wrap">

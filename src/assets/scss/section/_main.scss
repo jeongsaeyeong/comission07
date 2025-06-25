@@ -19,6 +19,7 @@
     display: flex;
     align-items: flex-start;
     height: 100%;
+    z-index: 10;
     margin-right: 10px;
 
     .nav_m {
@@ -129,7 +130,17 @@
             height: 446px;
             display: flex;
             justify-content: center;
-            padding: 26px;
+            align-items: flex-start;
+            position: relative;
+            border: none;
+
+            div {
+                width: 280px;
+
+                iframe {
+                    width: inherit;
+                }
+            }
         }
     }
 }

@@ -1,4 +1,4 @@
-@media (max-width: 800px) {
+@media (max-width: 1000px) {
     .Board01_wrap {
         margin: 0 auto;
         flex-direction: column;
@@ -92,13 +92,14 @@
                     .list {
                         flex-wrap: wrap;
                         align-items: center;
-                        justify-content: left;
+                        justify-content: right;
                         align-content: center;
                         height: 67px;
                         width: 100%;
 
                         .title_wrap {
                             display: flex;
+                            text-align: left;
                             width: 80%;
                             padding: 5px 0;
                             margin-bottom: 2px;
@@ -131,13 +132,18 @@
                             display: flex;
                             justify-content: left;
                         }
+
+                        .watch {
+                            margin-right: 7px;
+                        }
                     }
                 }
 
                 .go_write {
                     margin-bottom: 15px;
 
-                    a {
+                    a,
+                    button {
                         width: 60px;
                         height: 30px;
                         font-size: 12px;
@@ -310,6 +316,12 @@
                             width: 15px;
                         }
                     }
+
+                    button {
+                        width: 45px;
+                        height: 30px;
+                        font-size: 12px;
+                    }
                 }
             }
         }
@@ -318,6 +330,10 @@
     .Board05_wrap {
         >div {
             width: 353px !important;
+        }
+
+        .Write05_wrap {
+            width: 100% !important;
         }
 
         >.top {
@@ -393,7 +409,7 @@
                     min-width: 393px;
                     height: 100%;
                     position: fixed;
-                    
+
                 }
 
                 .another {
@@ -410,4 +426,74 @@
             }
         }
     }
+
+    .Write05_wrap {
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        max-width: 420px;
+        min-width: 393px;
+        position: fixed;
+
+        .write_wrap {
+            overflow: hidden;
+            width: 353px;
+            margin-top: 0;
+
+            .header {
+                button {
+                    font-size: 15px;
+                }
+            }
+
+            .main {
+                .profile {
+                    p {
+                        font-size: 14px;
+                        color: var(--white);
+                    }
+                }
+
+                .content {
+                    .picture_wrap {
+                        overflow-x: auto;
+                        display: flex;
+                        width: 353px;
+                        margin-bottom: 25px;
+
+                        div {
+                            min-width: 185px;
+                            height: 185px;
+                            border-radius: 10px;
+                            background-color: var(--white01);
+                            margin-right: 10px;
+                        }
+                    }
+
+                    .btn_box {
+                        label {
+                            img {
+                                width: 20px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .Detail05_wrap {
+        .main {
+            .input_wrap {
+                .btn_box {
+                    button {
+                        width: 45px;
+                        height: 30px;
+                        font-size: 12px;
+                    }
+                }
+            }
+        }
+    }
+
 }

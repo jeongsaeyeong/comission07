@@ -27,7 +27,12 @@ const Detail = () => {
                     <div className="btn_box">
                         <input type="file" id='picture' />
                         <label htmlFor="picture"><img src={Picture} alt="" /></label>
-                        <button>등록</button>
+                        <div>
+                            <input type="checkbox" id='check'/>
+                            <label htmlFor="check"></label>
+                            <p>민감한 내용</p>
+                            <button>등록</button>
+                        </div>
                     </div>
                 </div>
             </div>
