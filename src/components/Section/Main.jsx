@@ -1,10 +1,15 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import Profile from '../../assets/img/main/icon_user.png'
 import { Link } from 'react-router-dom'
 import Header from './Header'
 import { TwitterTweetEmbed } from 'react-twitter-embed'
-const Main = () => {
 
+const Main = () => {
+    const handleLogout = () => {
+        localStorage.clear()
+        alert('로그아웃되었습니다.')
+        window.location.href = '/login'
+    }
 
     return (
         <div className="Main_wrap container_main">
@@ -23,7 +28,14 @@ const Main = () => {
                     <div className="info">
                         <h3>천사님</h3>
                         <p className="point">500p</p>
-                        <Link to="/mypage">프로필 관리</Link>
+                        <div className='info_btn'>
+                            {localStorage.getItem('username') === 'admin' ? (
+                                <Link to="/admin">관리자 페이지</Link>
+                            ) : (
+                                <Link to="/mypage">프로필 관리</Link>
+                            )}
+                            <button onClick={handleLogout}>로그아웃</button>
+                        </div>
                     </div>
                 </div>
                 <div className="bottom">

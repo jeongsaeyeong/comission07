@@ -107,6 +107,11 @@
                 justify-content: space-between;
                 height: 55px;
 
+                .info_btn {
+                    display: flex;
+                    align-items: center;
+                }
+
                 h3 {
                     font-size: 14px;
                     color: var(--black);
@@ -119,9 +124,14 @@
                     margin-bottom: 8px;
                 }
 
-                a {
+                a,button {
+                    margin-right: 10px;
                     font-size: 12px;
                     color: var(--gray02);
+                }
+                
+                button {
+                    text-decoration: underline;
                 }
             }
         }

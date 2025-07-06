@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Login from './components/User/Login/Login'
 import LoginSuccess from './components/User/Login/LoginSuccess'
@@ -19,7 +19,17 @@ import Admin from './components/Admin/Admin'
 import Mypage from './components/User/Mypage/Mypage'
 
 const App = () => {
-    const [onlogin, setOnlogin] = useState(true);
+    const [onlogin, setOnlogin] = useState(false);
+
+    useEffect(() => {
+        const username = localStorage.getItem('username');
+        const password = localStorage.getItem('password');
+        if (username && password) {
+            setOnlogin(true);
+        } else {
+            setOnlogin(false);
+        }
+    }, []);
 
     return (
         <BrowserRouter>

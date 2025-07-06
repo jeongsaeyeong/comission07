@@ -60,6 +60,7 @@
                     display: flex;
                     align-items: center;
                     justify-content: space-between;
+                    margin-bottom: 30px;
 
                     >div {
                         width: 48%;
@@ -83,6 +84,11 @@
                                     border-radius: 10px;
                                     border: 1px solid var(--gray02);
                                     margin-right: 6px;
+                                }
+
+                                input:checked+label {
+                                    background-color: var(--main);
+                                    border-color: var(--main);
                                 }
                             }
                         }
@@ -197,6 +203,11 @@
                             padding: 0 10px;
                         }
                     }
+
+                    .nick {
+                        display: flex;
+                        flex-direction: row;
+                    }
                 }
 
                 .middle {
@@ -289,7 +300,7 @@
             }
 
             .right {
-                .top {
+                .top_right {
                     margin-bottom: 0px;
 
                     .tab {
@@ -325,19 +336,35 @@
                                 width: 65%;
                             }
                         }
+
+                        .list_wrap {
+                            justify-content: flex-start;
+                        }
+
                     }
                 }
 
                 .middle {
                     .board_manage {
-                        .kind {
+                        .kind_right {
+                            .name {
+                                width: 70px;
+                            }
+
                             h4 {
                                 width: 25%;
                             }
                         }
 
-                        .state_wrap {
+                        .state_wrap_right {
                             .state {
+                                .name {
+                                    display: flex;
+                                    justify-content: left;
+                                    padding-left: 10px;
+                                    width: 70px;
+                                }
+
                                 input {
                                     width: 25%;
                                 }
@@ -348,6 +375,12 @@
 
                 .bottom {
                     margin-bottom: 0px;
+
+                    .list {
+                        div {
+                            flex-direction: row;
+                        }
+                    }
 
                     div {
                         display: flex;
@@ -434,7 +467,7 @@
             .list_wrap {
                 width: 100%;
                 flex-direction: column;
-                justify-content: flex-start;
+                justify-content: flex-start !important;
                 border-radius: 5px;
                 border: 1px solid var(--gray02);
                 min-height: 158px;
@@ -509,6 +542,7 @@
                             >div {
                                 width: 49%;
                                 flex-direction: column;
+                                justify-content: flex-start;
                                 padding: 10px;
                                 border: 1px solid var(--gray02);
                                 border-radius: 5px;
@@ -620,11 +654,11 @@
             }
         }
 
-        div {
+        >img {
             margin-top: 100px;
             width: 500px;
-            height: 300px;
             background-color: var(--white01);
+            object-fit: cover;
             display: flex;
             justify-content: center;
             align-items: center;

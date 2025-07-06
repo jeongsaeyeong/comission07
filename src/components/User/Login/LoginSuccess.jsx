@@ -1,11 +1,14 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 
 const LoginSuccess = () => {
+    const handleEnter = () => {
+        window.location.href = '/'
+    }
+
     return (
         <div className='Login_wrap LoginSuccess_wrap container'>
             <div className="img"></div>
-            <Link to='/'>입장하기</Link>
+            <button className='go_home' onClick={handleEnter}>입장하기</button>
         </div>
     )
 }
