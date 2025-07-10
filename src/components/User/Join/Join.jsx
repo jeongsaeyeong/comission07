@@ -37,9 +37,9 @@ const Join = () => {
             return
         }
 
-        if (touched.nick && !/^[가-힣a-zA-Z0-9]{1,12}$/.test(nick)) {
-            setErrormsg('닉네임은 띄어쓰기 없이 12자 이하로 입력해 주세요.')
-            return
+        if (!/^[가-힣]{1,12}$/.test(nick)) {
+            setErrormsg('닉네임은 띄어쓰기 없이 한글 12자 이하로 입력해 주세요.');
+            return;
         }
 
         if (touched.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
@@ -64,7 +64,32 @@ const Join = () => {
     const onJoin = async () => {
         if (!id || !nick || !email || !pass || !passre || !hint || !file || !answer01 || !answer02 || !answer03 || !free) {
             setErrormsg('모든 항목을 입력해 주세요.');
-            return
+            return;
+        }
+
+        if (pass !== passre) {
+            setErrormsg('비밀번호가 일치하지 않습니다.');
+            return;
+        }
+
+        if (!/^[가-힣]{1,12}$/.test(nick)) {
+            setErrormsg('닉네임은 띄어쓰기 없이 한글 12자 이하로 입력해 주세요.');
+            return;
+        }
+
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            setErrormsg('올바른 이메일 형식을 입력해 주세요.');
+            return;
+        }
+
+        if (!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/.test(pass)) {
+            setErrormsg('비밀번호는 영문/숫자/특수문자를 포함해 8자 이상이어야 합니다.');
+            return;
+        }
+
+        if (file && !['image/png', 'image/jpeg', 'image/jpg', 'image/gif', 'image/webp'].includes(file.type)) {
+            setErrormsg('이미지 파일만 첨부해 주세요.');
+            return;
         }
 
         const formData = new FormData();
@@ -78,17 +103,17 @@ const Join = () => {
         formData.append('answer01', answer01);
         formData.append('answer02', answer02);
         formData.append('answer03', answer03);
-        formData.append('free', free)
+        formData.append('free', free);
 
         try {
-            const res = await axios.post('http://ooooo0516.dothome.co.kr/backend/user/join/join.php', formData)
+            const res = await axios.post('http://ooooo0516.dothome.co.kr/backend/user/join/join.php', formData);
             if (res.data.success) {
-                navigation('/join_success')
+                navigation('/join_success');
             } else {
-                setErrormsg('회원가입 실패: ' + res.data.message)
+                setErrormsg('회원가입 실패: ' + res.data.message);
             }
         } catch (err) {
-            setErrormsg('에러 발생: ' + err.message)
+            setErrormsg('에러 발생: ' + err.message);
         }
     }
 

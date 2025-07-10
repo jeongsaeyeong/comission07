@@ -1,51 +1,112 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 import Delete from '../../../assets/img/mypage/button_delete.svg'
 import Profile from '../../../assets/img/mypage/profile.svg'
+import ProfileTop from './ProfileTop'
+import ProfileModify from './ProfileModify'
+
+const baseUrl = process.env.REACT_APP_API_BASE_URL
 
 const Mypage = () => {
     const [show, setShow] = useState(false);
     const [text, setText] = useState('로그아웃');
     const [modify, setModify] = useState(false);
     const [click, setClick] = useState('개별');
+    const [notice, setNotice] = useState({ personal: '', all: '' });
+    const [userInfo, setUserInfo] = useState({
+        nickname: '',
+        email: '',
+        profile_image: '',
+        point: 0
+    });
+
+    const loadNotices = async () => {
+        try {
+            const formData = new FormData();
+            formData.append('username', localStorage.getItem('username'));
+
+            const res = await axios.post(`${baseUrl}/backend/user/mypage/get_notice.php`, formData);
+            if (res.data.success) {
+                setNotice(res.data.data);
+            }
+        } catch (err) {
+            console.error('공지 불러오기 실패', err);
+        }
+    };
+
+    const loadUserInfo = async () => {
+        try {
+            const username = localStorage.getItem('username');
+            const formData = new FormData();
+            formData.append('username', username);
+
+            const [infoRes, pointRes] = await Promise.all([
+                axios.post(`${baseUrl}/backend/user/mypage/get_userinfo.php`, formData),
+                axios.post(`${baseUrl}/backend/user/mypage/get_user_point.php`, formData)
+            ]);
+
+            if (infoRes.data.success && pointRes.data.success) {
+                setUserInfo({
+                    ...infoRes.data.data,
+                    point: pointRes.data.point
+                });
+            }
+        } catch (err) {
+            console.error('유저 정보 또는 포인트 불러오기 실패', err);
+        }
+    };
+
+    const handleSaveProfile = async () => {
+        if (userInfo.newPassword && userInfo.newPassword !== userInfo.newPasswordConfirm) {
+            alert('비밀번호가 일치하지 않습니다.');
+            return;
+        }
+
+        try {
+            const formData = new FormData();
+            formData.append('username', localStorage.getItem('username'));
+            formData.append('nickname', userInfo.nickname);
+            if (userInfo.newPassword) {
+                formData.append('password', userInfo.newPassword);
+            }
+
+            const res = await axios.post(`${baseUrl}/backend/user/mypage/update_userinfo.php`, formData);
+            if (res.data.success) {
+                alert('프로필이 저장되었습니다.');
+                loadUserInfo();  // 다시 불러오기
+                setModify(false);
+            } else {
+                alert('실패: ' + res.data.message);
+            }
+        } catch (err) {
+            console.error('저장 실패', err);
+            alert('서버 오류');
+        }
+    };
+
+    useEffect(() => {
+        loadNotices();
+        loadUserInfo();
+    }, []);
+
+    useEffect(() => {
+        loadNotices();
+    }, []);
 
     return (
         <div className='Mypage_wrap container_main'>
             <div className="right_m">
-                <div className="top">
-                    <div className="icon">
-                        <img src={Profile} alt="" />
-                    </div>
-                    <div className="info">
-                        <h3>천사님</h3>
-                        <p className='point'>500p</p>
-                        <button onClick={() => { (setModify(!modify)) }}>프로필 관리</button>
-                    </div>
-                </div>
-                {modify &&
-                    <div className="modify_wrap">
-                        <div className="top">
-                            <div></div>
-                            <h2>프로필 관리</h2>
-                            <button onClick={() => { setModify(false) }}><img src={Delete} alt="" /></button>
-                        </div>
-                        <div className="bottom">
-                            <div className="text_box">
-                                <p>1234</p>
-                                <p>1234@naver.com</p>
-                                <input type="text" placeholder='닉네임' />
-                                <input type="password" placeholder='비밀번호' />
-                                <input className='last' type="password" placeholder='비밀번호 재입력' />
-                            </div>
-                            <div className="btn_box">
-                                <div>
-                                    <button onClick={() => { setText('로그아웃'); setShow(true) }}>로그아웃</button>
-                                    <button onClick={() => { setText('계정 탈퇴'); setShow(true) }} className='del'>탈퇴하기</button>
-                                </div>
-                                <button>저장</button>
-                            </div>
-                        </div>
-                    </div>
-                }
+                <ProfileTop userInfo={userInfo} baseUrl={baseUrl} onModifyClick={() => setModify(!modify)} />
+                {modify && (
+                    <ProfileModify
+                        userInfo={userInfo}
+                        setUserInfo={setUserInfo}
+                        setModify={setModify}
+                        setShow={setShow}
+                        setText={setText}
+                        handleSaveProfile={handleSaveProfile}
+                    />
+                )}
             </div>
             <div className="left">
                 <div className="tab">
@@ -53,45 +114,21 @@ const Mypage = () => {
                     <button onClick={() => { setClick('전체') }} className={click === '전체' ? 'click' : ''}>전체 공지</button>
                 </div>
                 <div className="main">
-                    <p>내용</p>
+                    <p>{click === '개별' ? notice.personal : notice.all}</p>
                 </div>
             </div>
             <div className="right">
-                <div className="top">
-                    <div className="icon">
-                        <img src={Profile} alt="" />
-                    </div>
-                    <div className="info">
-                        <h3>천사님</h3>
-                        <p className='point'>500p</p>
-                        <button onClick={() => { (setModify(!modify)) }}>프로필 관리</button>
-                    </div>
-                </div>
-                {modify &&
-                    <div className="modify_wrap">
-                        <div className="top">
-                            <div></div>
-                            <h2>프로필 관리</h2>
-                            <button onClick={() => { setModify(false) }}><img src={Delete} alt="" /></button>
-                        </div>
-                        <div className="bottom">
-                            <div className="text_box">
-                                <p>1234</p>
-                                <p>1234@naver.com</p>
-                                <input type="text" placeholder='닉네임' />
-                                <input type="password" placeholder='비밀번호' />
-                                <input className='last' type="password" placeholder='비밀번호 재입력' />
-                            </div>
-                            <div className="btn_box">
-                                <div>
-                                    <button onClick={() => { setText('로그아웃'); setShow(true) }}>로그아웃</button>
-                                    <button onClick={() => { setText('계정 탈퇴'); setShow(true) }} className='del'>탈퇴하기</button>
-                                </div>
-                                <button>저장</button>
-                            </div>
-                        </div>
-                    </div>
-                }
+                <ProfileTop userInfo={userInfo} baseUrl={baseUrl} onModifyClick={() => setModify(!modify)} />
+                {modify && (
+                    <ProfileModify
+                        userInfo={userInfo}
+                        setUserInfo={setUserInfo}
+                        setModify={setModify}
+                        setShow={setShow}
+                        setText={setText}
+                        handleSaveProfile={handleSaveProfile}
+                    />
+                )}
             </div>
             {show &&
                 <div className="pop_wrap">

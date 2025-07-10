@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json');
-include '../../db.php'; // $conn (mysqli 객체) 포함
+include '../../db.php';
 
 function sanitize($str) {
     return htmlspecialchars(trim($str), ENT_QUOTES, 'UTF-8');
@@ -21,7 +21,15 @@ $result = $stmt->get_result();
 $user = $result->fetch_assoc();
 
 if ($user && password_verify($password, $user['password_hash'])) {
-    echo json_encode(['success' => true, 'message' => '로그인 성공']);
+    if ($user['status'] === '승인') {
+        echo json_encode(['success' => true, 'message' => '로그인 성공']);
+    } elseif ($user['status'] === '대기') {
+        echo json_encode(['success' => false, 'message' => '신청이 승인되지 않았습니다.']);
+    } elseif ($user['status'] === '반려') {
+        echo json_encode(['success' => false, 'message' => '신청이 반려되었습니다.']);
+    } else {
+        echo json_encode(['success' => false, 'message' => '알 수 없는 계정 상태입니다.']);
+    }
 } else {
     echo json_encode(['success' => false, 'message' => '아이디 또는 비밀번호가 올바르지 않습니다.']);
 }
