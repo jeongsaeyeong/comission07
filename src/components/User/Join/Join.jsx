@@ -15,7 +15,7 @@ const Join = () => {
     const [answer02, setAnswer02] = useState('');
     const [answer03, setAnswer03] = useState('');
     const [free, setFree] = useState('');
-    const [errormsg, setErrormsg] = useState('');
+    const [errormsg, setErrormsg] = useState(''); const [placeholders, setPlaceholders] = useState(['1. 질문', '2. 질문', '3. 질문']);
     const [touched, setTouched] = useState({
         nick: false,
         email: false,
@@ -59,6 +59,22 @@ const Join = () => {
 
         setErrormsg('')
     }, [nick, pass, passre, email, touched, file]);
+
+    useEffect(() => {
+        const loadQuestions = async () => {
+            try {
+                const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/user/join/get_questions.php`);
+                if (res.data) {
+                    const formatted = [res.data[1], res.data[2], res.data[3]];
+                    setPlaceholders(formatted);
+                }
+            } catch (err) {
+                console.error('질문 불러오기 실패', err);
+            }
+        };
+
+        loadQuestions();
+    }, []);
 
 
     const onJoin = async () => {
@@ -106,7 +122,7 @@ const Join = () => {
         formData.append('free', free);
 
         try {
-            const res = await axios.post('http://ooooo0516.dothome.co.kr/backend/user/join/join.php', formData);
+            const res = await axios.post('http://ooooo0516.dothome.co.kr/user/join/join.php', formData);
             if (res.data.success) {
                 navigation('/join_success');
             } else {
@@ -146,9 +162,9 @@ const Join = () => {
             </div>
             <div className="input_box">
                 <h3>가입 질문</h3>
-                <input value={answer01} onChange={(e) => { setAnswer01(e.target.value) }} type="text" placeholder='1. 질문' />
-                <input value={answer02} onChange={(e) => { setAnswer02(e.target.value) }} type="text" placeholder='2. 질문' />
-                <input value={answer03} onChange={(e) => { setAnswer03(e.target.value) }} type="text" placeholder='3. 질문' />
+                <input value={answer01} onChange={(e) => setAnswer01(e.target.value)} type="text" placeholder={placeholders[0]} />
+                <input value={answer02} onChange={(e) => setAnswer02(e.target.value)} type="text" placeholder={placeholders[1]} />
+                <input value={answer03} onChange={(e) => setAnswer03(e.target.value)} type="text" placeholder={placeholders[2]} />
             </div>
             <div className="input_box">
                 <h3>유수에 대하여 자유발언 해주세요 (500자 이상)</h3>

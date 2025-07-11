@@ -4,10 +4,12 @@ import Delete from '../../../assets/img/mypage/button_delete.svg'
 import Profile from '../../../assets/img/mypage/profile.svg'
 import ProfileTop from './ProfileTop'
 import ProfileModify from './ProfileModify'
+import { useNavigate } from 'react-router-dom'
 
 const baseUrl = process.env.REACT_APP_API_BASE_URL
 
 const Mypage = () => {
+    const navigate = useNavigate();
     const [show, setShow] = useState(false);
     const [text, setText] = useState('로그아웃');
     const [modify, setModify] = useState(false);
@@ -23,10 +25,12 @@ const Mypage = () => {
     const loadNotices = async () => {
         try {
             const formData = new FormData();
+            console.log('username', localStorage.getItem('username'))
             formData.append('username', localStorage.getItem('username'));
 
-            const res = await axios.post(`${baseUrl}/backend/user/mypage/get_notice.php`, formData);
-            if (res.data.success) {
+            const res = await axios.post(`${baseUrl}/user/mypage/get_notice.php`, formData);
+            if (res.data) {
+                console.log('notice', res.data)
                 setNotice(res.data.data);
             }
         } catch (err) {
@@ -41,11 +45,13 @@ const Mypage = () => {
             formData.append('username', username);
 
             const [infoRes, pointRes] = await Promise.all([
-                axios.post(`${baseUrl}/backend/user/mypage/get_userinfo.php`, formData),
-                axios.post(`${baseUrl}/backend/user/mypage/get_user_point.php`, formData)
+                axios.post(`${baseUrl}/user/mypage/get_userinfo.php`, formData),
+                axios.post(`${baseUrl}/user/mypage/get_user_point.php`, formData)
             ]);
 
-            if (infoRes.data.success && pointRes.data.success) {
+            if (infoRes.data && pointRes.data) {
+                console.log('infoRes.data', infoRes.data)
+
                 setUserInfo({
                     ...infoRes.data.data,
                     point: pointRes.data.point
@@ -70,10 +76,10 @@ const Mypage = () => {
                 formData.append('password', userInfo.newPassword);
             }
 
-            const res = await axios.post(`${baseUrl}/backend/user/mypage/update_userinfo.php`, formData);
+            const res = await axios.post(`${baseUrl}/user/mypage/update_userinfo.php`, formData);
             if (res.data.success) {
                 alert('프로필이 저장되었습니다.');
-                loadUserInfo();  // 다시 불러오기
+                loadUserInfo();
                 setModify(false);
             } else {
                 alert('실패: ' + res.data.message);
@@ -84,7 +90,32 @@ const Mypage = () => {
         }
     };
 
+    const handlePopupAction = async () => {
+        if (text === '로그아웃') {
+            localStorage.clear();
+            navigate('/login');
+        } else if (text === '계정 탈퇴') {
+            try {
+                const formData = new FormData();
+                formData.append('username', localStorage.getItem('username'));
+
+                const res = await axios.post(`${baseUrl}/user/mypage/delete_user.php`, formData);
+                if (res.data.success) {
+                    alert('탈퇴되었습니다.');
+                    localStorage.clear();
+                    navigate('/login');
+                } else {
+                    alert('탈퇴 실패: ' + res.data.message);
+                }
+            } catch (err) {
+                console.error('탈퇴 요청 실패', err);
+                alert('서버 오류로 탈퇴에 실패했습니다.');
+            }
+        }
+    };
+
     useEffect(() => {
+        console.log('username', localStorage.getItem('username'))
         loadNotices();
         loadUserInfo();
     }, []);
@@ -143,8 +174,8 @@ const Mypage = () => {
                             </p>
                         )}
                         <div className="btn_box">
-                            <button onClick={() => { setShow(false) }}>취소하기</button>
-                            <button className='go'>{text}</button>
+                            <button onClick={() => setShow(false)}>취소하기</button>
+                            <button className='go' onClick={handlePopupAction}>{text}</button>
                         </div>
                     </div>
                 </div>

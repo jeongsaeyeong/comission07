@@ -10,8 +10,6 @@ const ProfileModify = ({
     handleSaveProfile,
 }) => {
 
-    console.log('userInfo', userInfo)
-
     return (
         <div className="modify_wrap">
             <div className="top">

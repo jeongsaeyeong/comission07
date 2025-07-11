@@ -462,6 +462,48 @@
                         }
                     }
                 }
+
+                .see_wrap {
+                    .find {
+                        display: flex;
+                        justify-content: space-between;
+                        width: 100%;
+                        margin-bottom: 11px;
+
+                        input {
+                            height: 25px;
+                            width: 83%;
+                            border: 1px solid var(--gray02);
+                            border-radius: 5px;
+                            font-size: 12px;
+                            padding: 0 10px;
+                        }
+                    }
+
+                    .info {
+                        div {
+                            width: 100%;
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            margin-top: 10px;
+
+                            p {
+                                font-size: 12px;
+                                font-weight: 600;
+                            }
+
+                            input {
+                                height: 25px;
+                                width: 70%;
+                                border: 1px solid var(--gray02);
+                                border-radius: 5px;
+                                font-size: 12px;
+                                padding: 0 10px;
+                            }
+                        }
+                    }
+                }
             }
 
             .list_wrap {
@@ -474,6 +516,7 @@
                 padding: 10px;
 
                 div {
+                    display: flex;
                     justify-content: left !important;
                     align-items: center;
                     margin-bottom: 10px;

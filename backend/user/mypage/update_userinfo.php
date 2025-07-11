@@ -8,13 +8,15 @@ function sanitize($s) {
 
 $username = sanitize($_POST['username'] ?? '');
 $nickname = sanitize($_POST['nickname'] ?? '');
-$password = $_POST['password'] ?? ''; // 비밀번호는 해시할 예정
+$password = $_POST['password'] ?? ''; // 비밀번호는 해시 예정 (sanitize 안 함)
 
+// 필수 값 누락 시
 if (!$username || !$nickname) {
     echo json_encode(['success' => false, 'message' => '필수 값 누락']);
     exit;
 }
 
+// 사용자 확인
 $stmt = $conn->prepare("SELECT id FROM users WHERE username = ?");
 $stmt->bind_param("s", $username);
 $stmt->execute();
@@ -27,6 +29,7 @@ if (!$user) {
     exit;
 }
 
+// 업데이트 쿼리
 if ($password) {
     $password_hash = password_hash($password, PASSWORD_DEFAULT);
     $stmt = $conn->prepare("UPDATE users SET nickname = ?, password_hash = ? WHERE username = ?");
@@ -37,11 +40,17 @@ if ($password) {
 }
 
 $success = $stmt->execute();
+$errorMsg = $stmt->error;
 $stmt->close();
 $conn->close();
 
+// 응답 처리
 if ($success) {
     echo json_encode(['success' => true]);
 } else {
-    echo json_encode(['success' => false, 'message' => 'DB 업데이트 실패']);
+    echo json_encode([
+        'success' => false,
+        'message' => 'DB 업데이트 실패: ' . $errorMsg
+    ]);
 }
+?>
