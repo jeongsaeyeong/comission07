@@ -101,7 +101,7 @@ const LeftSection = () => {
             </div>
 
             <div className="bottom">
-                <h3>이미지 등록</h3>
+                <h3>PC 이미지 등록</h3>
                 <FileInput label="대문 배경" keyName="main_background" />
                 <FileInput label="대문 로고" keyName="main_logo" />
                 <FileInput label="배경화면" keyName="background_image" />
@@ -113,6 +113,19 @@ const LeftSection = () => {
                 <FileInput label="메뉴4" keyName="menu4" />
                 <FileInput label="메뉴5" keyName="menu5" />
                 <FileInput label="토탈 프로필" keyName="total_profile" />
+            </div>
+
+            <div className="bottom">
+                <h3>모바일 이미지 등록</h3>
+                <FileInput label="대문 배경" keyName="m_main_background" />
+                <FileInput label="배경화면" keyName="m_background_image" />
+                <FileInput label="배너" keyName="m_banner" />
+                <FileInput label="메뉴 로고" keyName="m_menu_logo" />
+                <FileInput label="메뉴1" keyName="m_menu1" />
+                <FileInput label="메뉴2" keyName="m_menu2" />
+                <FileInput label="메뉴3" keyName="m_menu3" />
+                <FileInput label="메뉴4" keyName="m_menu4" />
+                <FileInput label="메뉴5" keyName="m_menu5" />
             </div>
         </div>
     )

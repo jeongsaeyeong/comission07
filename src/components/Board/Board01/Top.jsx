@@ -1,16 +1,47 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Down from '../../../assets/img/board/button_down.svg'
+import axios from 'axios'
+
+const baseUrl = process.env.REACT_APP_API_BASE_URL
 
 const Top = ({ params }) => {
-    const [click, setClick] = useState('all');
+    const [click, setClick] = useState('all')
+    const [tabs, setTabs] = useState([])
+
+    useEffect(() => {
+        const fetchTabs = async () => {
+            try {
+                const res = await axios.get(`${baseUrl}/setting/board/get_board_tabs.php?menu=menu1`)
+                if(res.data){
+                    console.log(res.data)
+                    setTabs(res.data.tabs || [])
+                }
+            } catch (err) {
+                console.error('탭 불러오기 실패', err)
+            }
+        }
+
+        if (params.number === '01') {
+            fetchTabs()
+        }
+    }, [params.number])
 
     return (
         <div className="top">
             {params.number === '01' &&
                 <div className="tag_wrap">
-                    <button className={click === 'all' ? 'click' : ''} onClick={() => { setClick('all') }}>전체<strong>(999+)</strong></button>
-                    <button className={click === 'short' ? 'click' : ''} onClick={() => { setClick('short') }}>단편<strong>(999+)</strong></button>
-                    <button className={click === 'long' ? 'click' : ''} onClick={() => { setClick('long') }}>장편<strong>(999+)</strong></button>
+                    <button className={click === 'all' ? 'click' : ''} onClick={() => setClick('all')}>
+                        전체<strong>(999+)</strong>
+                    </button>
+                    {tabs.map((tab, i) => (
+                        <button
+                            key={i}
+                            className={click === tab ? 'click' : ''}
+                            onClick={() => setClick(tab)}
+                        >
+                            {tab}<strong>(999+)</strong>
+                        </button>
+                    ))}
                 </div>
             }
             <div className="search_wrap">

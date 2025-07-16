@@ -491,6 +491,7 @@
                             p {
                                 font-size: 12px;
                                 font-weight: 600;
+                                width: 33.5px;
                             }
 
                             input {
@@ -500,6 +501,10 @@
                                 border-radius: 5px;
                                 font-size: 12px;
                                 padding: 0 10px;
+                            }
+
+                            .input_full {
+                                width: 88%;
                             }
                         }
                     }

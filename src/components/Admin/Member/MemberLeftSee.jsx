@@ -10,6 +10,7 @@ const MemberLeftSee = () => {
         username: '',
         nickname: '',
         email: '',
+        hint_answer: '',
     })
 
     useEffect(() => {
@@ -31,6 +32,7 @@ const MemberLeftSee = () => {
             username: user.username,
             nickname: user.nickname,
             email: user.email,
+            hint_answer: user.hint_answer,
         })
     }
 
@@ -88,18 +90,17 @@ const MemberLeftSee = () => {
                     <div>
                         <p>아이디</p>
                         <input
+                            className='input_full'
                             type="text"
                             value={form.username}
                             onChange={(e) => onChange('username', e.target.value)}
                         />
-                        <button onClick={() => onSave('username')}>수정</button>
                     </div>
                     <div>
                         <p>닉네임</p>
                         <input
                             type="text"
                             value={form.nickname}
-                            onChange={(e) => onChange('nickname', e.target.value)}
                         />
                         <button onClick={() => onSave('nickname')}>수정</button>
                     </div>
@@ -111,6 +112,15 @@ const MemberLeftSee = () => {
                             onChange={(e) => onChange('email', e.target.value)}
                         />
                         <button onClick={() => onSave('email')}>수정</button>
+                    </div>
+                    <div>
+                        <p>힌트</p>
+                        <input
+                            type="text"
+                            value={form.hint_answer}
+                            onChange={(e) => onChange('hint_answer', e.target.value)}
+                        />
+                        <button onClick={() => onSave('hint_answer')}>수정</button>
                     </div>
                 </div>
             )}

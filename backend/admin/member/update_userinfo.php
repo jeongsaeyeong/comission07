@@ -10,7 +10,7 @@ $id = isset($_POST['id']) ? intval($_POST['id']) : 0;
 $field = isset($_POST['field']) ? sanitize($_POST['field']) : '';
 $value = isset($_POST['value']) ? sanitize($_POST['value']) : '';
 
-$allowed_fields = ['username', 'nickname', 'email'];
+$allowed_fields = ['username', 'nickname', 'email', 'hint_answer'];
 
 if ($id === 0 || !in_array($field, $allowed_fields)) {
     echo json_encode(['success' => false, 'message' => '잘못된 요청입니다.']);

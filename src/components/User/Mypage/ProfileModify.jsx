@@ -21,7 +21,7 @@ const ProfileModify = ({
             </div>
             <div className="bottom">
                 <div className="text_box">
-                    <p>{userInfo.nickname}</p>
+                    <p>{userInfo.username}</p>
                     <p>{userInfo.email}</p>
                     <input
                         type="text"

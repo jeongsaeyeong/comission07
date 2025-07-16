@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import Delete from '../../../assets/img/mypage/button_delete.svg'
-import Profile from '../../../assets/img/mypage/profile.svg'
 import ProfileTop from './ProfileTop'
 import ProfileModify from './ProfileModify'
 import { useNavigate } from 'react-router-dom'
@@ -16,11 +14,30 @@ const Mypage = () => {
     const [click, setClick] = useState('개별');
     const [notice, setNotice] = useState({ personal: '', all: '' });
     const [userInfo, setUserInfo] = useState({
+        username: '',
         nickname: '',
         email: '',
         profile_image: '',
         point: 0
     });
+
+    const [totalProfile, setTotalProfile] = useState('')
+
+    useEffect(() => {
+        const fetchTotalProfile = async () => {
+            try {
+                const res = await axios.get(`${baseUrl}/setting/home/get_total_profile.php`)
+                if (res.data) {
+                    console.log(res.data)
+                    setTotalProfile(`http://ooooo0516.dothome.co.kr/uploads/admin/${res.data.file_name}`)
+                }
+            } catch (err) {
+                console.error('토탈 프로필 이미지 불러오기 실패', err)
+            }
+        }
+
+        fetchTotalProfile()
+    }, [])
 
     const loadNotices = async () => {
         try {
@@ -127,7 +144,7 @@ const Mypage = () => {
     return (
         <div className='Mypage_wrap container_main'>
             <div className="right_m">
-                <ProfileTop userInfo={userInfo} baseUrl={baseUrl} onModifyClick={() => setModify(!modify)} />
+                <ProfileTop userInfo={userInfo} baseUrl={baseUrl} totalProfile={totalProfile} onModifyClick={() => setModify(!modify)} />
                 {modify && (
                     <ProfileModify
                         userInfo={userInfo}
@@ -149,7 +166,7 @@ const Mypage = () => {
                 </div>
             </div>
             <div className="right">
-                <ProfileTop userInfo={userInfo} baseUrl={baseUrl} onModifyClick={() => setModify(!modify)} />
+                <ProfileTop userInfo={userInfo} baseUrl={baseUrl} totalProfile={totalProfile} onModifyClick={() => setModify(!modify)} />
                 {modify && (
                     <ProfileModify
                         userInfo={userInfo}

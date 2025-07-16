@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios';
+const baseUrl = process.env.REACT_APP_API_BASE_URL
 
-const Join = () => {
+const Join = ({ setOnlogin }) => {
     const navigation = useNavigate();
     const [id, setId] = useState('');
     const [nick, setNick] = useState('');
@@ -24,11 +25,22 @@ const Join = () => {
     })
 
     useEffect(() => {
-        const username = localStorage.getItem('username');
-        if (username) {
-            alert('이미 로그인되어 있습니다.');
-            navigation('/');
-        }
+        const checkJoinEnabled = async () => {
+            try {
+                const res = await axios.get(`${baseUrl}/user/join/get_join_setting.php`);
+                if (res.data.value === '0') {
+                    alert('회원가입이 현재 비활성화되어 있습니다.');
+                    localStorage.setItem('username', 'none');
+                    localStorage.setItem('password', 'none');
+                    setOnlogin(true)
+                    navigation('/login');
+                }
+            } catch (err) {
+                console.error('가입 설정 불러오기 실패:', err);
+            }
+        };
+
+        checkJoinEnabled();
     }, []);
 
     useEffect(() => {
@@ -37,7 +49,7 @@ const Join = () => {
             return
         }
 
-        if (!/^[가-힣]{1,12}$/.test(nick)) {
+        if (touched.nick && !/^[가-힣]{1,12}$/.test(nick)) {
             setErrormsg('닉네임은 띄어쓰기 없이 한글 12자 이하로 입력해 주세요.');
             return;
         }
@@ -63,7 +75,7 @@ const Join = () => {
     useEffect(() => {
         const loadQuestions = async () => {
             try {
-                const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/user/join/get_questions.php`);
+                const res = await axios.get(`${baseUrl}/user/join/get_questions.php`);
                 if (res.data) {
                     const formatted = [res.data[1], res.data[2], res.data[3]];
                     setPlaceholders(formatted);
@@ -122,7 +134,7 @@ const Join = () => {
         formData.append('free', free);
 
         try {
-            const res = await axios.post('http://ooooo0516.dothome.co.kr/user/join/join.php', formData);
+            const res = await axios.post(`${baseUrl}/user/join/join.php`, formData);
             if (res.data.success) {
                 navigation('/join_success');
             } else {
@@ -171,7 +183,7 @@ const Join = () => {
                 <input value={free} onChange={(e) => { setFree(e.target.value) }} type="text" placeholder='유수에 대한 자유발언' />
             </div>
             <button onClick={() => { onJoin() }}>가입 신청</button>
-            <Link to='/'>로그인</Link>
+            <Link to='/login'>로그인</Link>
             <p className='errormsg'>{errormsg}</p>
         </div>
     )

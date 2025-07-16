@@ -1,10 +1,12 @@
 import React from 'react'
 
-const ProfileTop = ({ userInfo, onModifyClick, baseUrl }) => {
+const ProfileTop = ({ userInfo, onModifyClick, baseUrl, totalProfile }) => {
+    console.log('totalProfile', totalProfile)
+    
     return (
         <div className="top">
             <div className="icon">
-                <img src={`${baseUrl}/${userInfo.profile_image || 'default.png'}`} alt="프로필" />
+                <img src={totalProfile || `${baseUrl}/default.png`} alt="프로필" />
             </div>
             <div className="info">
                 <h3>{userInfo.nickname || '닉네임'}</h3>

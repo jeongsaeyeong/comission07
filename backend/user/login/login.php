@@ -20,7 +20,11 @@ $stmt->execute();
 $result = $stmt->get_result();
 $user = $result->fetch_assoc();
 
-if ($user && password_verify($password, $user['password_hash'])) {
+if (!$user) {
+    echo json_encode(['success' => false, 'message' => '존재하지 않는 회원입니다.']);
+} elseif (!password_verify($password, $user['password_hash'])) {
+    echo json_encode(['success' => false, 'message' => '아이디 또는 비밀번호가 올바르지 않습니다.']);
+} else {
     if ($user['status'] === '승인') {
         echo json_encode(['success' => true, 'message' => '로그인 성공']);
     } elseif ($user['status'] === '대기') {
@@ -30,8 +34,6 @@ if ($user && password_verify($password, $user['password_hash'])) {
     } else {
         echo json_encode(['success' => false, 'message' => '알 수 없는 계정 상태입니다.']);
     }
-} else {
-    echo json_encode(['success' => false, 'message' => '아이디 또는 비밀번호가 올바르지 않습니다.']);
 }
 
 $stmt->close();
