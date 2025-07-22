@@ -69,7 +69,6 @@ const Nav = () => {
             try {
                 const res = await axios.get(`${baseUrl}/setting/home/get_menu_images.php`)
                 setMenuImages(res.data)
-                console.log(res.data)
             } catch (err) {
                 console.error('메뉴 이미지 로딩 실패:', err)
             }

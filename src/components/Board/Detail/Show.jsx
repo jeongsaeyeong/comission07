@@ -2,16 +2,24 @@ import React from 'react'
 import Picture from '../../../assets/img/board/button_picture.svg'
 import Comment from './Comment'
 
-const Show = () => {
+const cleanQuillHTML = (html) => {
+    if (!html) return ''
+    return html.replace(/ class="[^"]*?ql-[^"]*?"/g, '')
+}
+
+const Show = ({ post }) => {
+    if (!post) return null
+
+    const cleanedContent = cleanQuillHTML(post.content)
 
     return (
         <>
             <div className="main">
                 <div className="content_wrap">
-                    <h3>장편</h3>
+                    <h3>{post.tab}</h3>
                     <div className="content">
-                        <h1>제목</h1>
-                        <p>들어가는 내용</p>
+                        <h1>{post.title}</h1>
+                        <div dangerouslySetInnerHTML={{ __html: cleanedContent }} />
                     </div>
                 </div>
                 <div className="comment_wrap">

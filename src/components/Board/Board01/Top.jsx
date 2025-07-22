@@ -4,17 +4,18 @@ import axios from 'axios'
 
 const baseUrl = process.env.REACT_APP_API_BASE_URL
 
-const Top = ({ params }) => {
-    const [click, setClick] = useState('all')
-    const [tabs, setTabs] = useState([])
+const Top = ({ params, setClick, click }) => {
+    const [tabs, setTabs] = useState({})
+    const [total, setTotal] = useState(0)
 
     useEffect(() => {
         const fetchTabs = async () => {
             try {
                 const res = await axios.get(`${baseUrl}/setting/board/get_board_tabs.php?menu=menu1`)
-                if(res.data){
+                if (res.data) {
                     console.log(res.data)
-                    setTabs(res.data.tabs || [])
+                    setTabs(res.data.tabs || {})
+                    setTotal(res.data.total || 0)
                 }
             } catch (err) {
                 console.error('탭 불러오기 실패', err)
@@ -31,15 +32,15 @@ const Top = ({ params }) => {
             {params.number === '01' &&
                 <div className="tag_wrap">
                     <button className={click === 'all' ? 'click' : ''} onClick={() => setClick('all')}>
-                        전체<strong>(999+)</strong>
+                        전체<strong>({total})</strong>
                     </button>
-                    {tabs.map((tab, i) => (
+                    {Object.entries(tabs).map(([tabName, count], i) => (
                         <button
                             key={i}
-                            className={click === tab ? 'click' : ''}
-                            onClick={() => setClick(tab)}
+                            className={click === tabName ? 'click' : ''}
+                            onClick={() => setClick(tabName)}
                         >
-                            {tab}<strong>(999+)</strong>
+                            {tabName}<strong>({count})</strong>
                         </button>
                     ))}
                 </div>

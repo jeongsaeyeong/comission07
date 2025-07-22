@@ -1,6 +1,7 @@
 *,
 *:before,
 *:after {
+    font-synthesis: weight style small-caps; 
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -86,15 +87,6 @@ h5 {
 
 ul {
     list-style: none;
-}
-
-em,
-address {
-    font-style: normal;
-}
-
-strong {
-    font-weight: normal;
 }
 
 img {

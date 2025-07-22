@@ -6,14 +6,15 @@ import { useParams } from 'react-router-dom'
 
 const Board01 = () => {
     const [page, setPage] = useState(1);
+    const [click, setClick] = useState('all')
     const params = useParams();
 
     return (
         <div className='Board01_wrap container_main'>
-            <Top params={params}/>
+            <Top params={params} setClick={setClick} click={click}/>
             <div className="main">
-                <List params={params}/>
-                <Pagenation setPage={setPage} page={page}/>
+                <List params={params} click={click}/>
+                <Pagenation setPage={setPage} page={page} />
             </div>
         </div>
     )

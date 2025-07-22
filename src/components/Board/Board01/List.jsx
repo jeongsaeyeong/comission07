@@ -1,21 +1,35 @@
-import React from 'react'
+import { React, useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios'
 import Rock from '../../../assets/img/board/button_rock.svg'
 
-const mockData = [
-    { id: 'notice1', number: '공지', title: '제목', tag: '', type: '공지', comment: '', isInfo: true },
-    { id: 'notice2', number: '공지', title: '제목', tag: '', type: '공지', comment: '', isInfo: true },
-    { id: '5', number: '5', title: '제목', tag: '단편', type: '비밀글', comment: '[999+]', isInfo: false },
-    { id: '4', number: '4', title: '제목', tag: '장편', type: '비밀글', comment: '[999+]', isInfo: false },
-    { id: '3', number: '3', title: '제목', tag: '단편', type: '일반', comment: '[999+]', isInfo: false },
-    { id: '2', number: '2', title: '제목', tag: '단편', type: '일반', comment: '', isInfo: false },
-    { id: '1', number: '1', title: '제목', tag: '단편', type: '일반', comment: '', isInfo: false },
-]
+const baseUrl = process.env.REACT_APP_API_BASE_URL
 
-const List = ({ params }) => {
+const List = ({ params, click }) => {
     const navigate = useNavigate()
+    const [posts, setPosts] = useState([])
 
     const hideWriter = params.number === '03' || params.number === '04'
+
+    useEffect(() => {
+        const fetchPosts = async () => {
+            try {
+                const res = await axios.get(`${baseUrl}/board/get/get_board_posts.php`, {
+                    params: {
+                        board_number: params.number,
+                        tab: click
+                    }
+                })
+                if (res.data.success) {
+                    setPosts(res.data.posts)
+                }
+            } catch (err) {
+                console.error('게시글 불러오기 실패', err)
+            }
+        }
+
+        fetchPosts()
+    }, [params.number, click])
 
     const onDetail = (id) => {
         navigate(`/detail/${id}`)
@@ -31,33 +45,31 @@ const List = ({ params }) => {
                 <p className="watch">조회수</p>
             </div>
             <div className="bottom">
-                {mockData.map((item) => (
-                    <div
-                        key={item.id}
-                        className={`list ${item.isInfo ? 'information' : ''}`}
-                    >
-                        {params.admin &&
-                            <>
-                                <input type="checkbox" id={`check-${item.id}`} />
-                                <label htmlFor={`check-${item.id}`}></label>
-                            </>
-                        }
+                {posts.map((item) => {
+                    const isSecret = item.open_type === 'protect' || item.open_type === 'notopen'
+                    const isInfo = item.tab === '공지'
 
-                        <p className="number">{item.number}</p>
-                        <div className="title_wrap"
-                            onClick={() => onDetail(item.id)}
-                        >
-                            {item.tag && <p className="tage">{item.tag}</p>}
-                            {item.type === '비밀글' && <img src={Rock} alt="" />}
-                            <p className={`title ${item.isInfo ? 'information' : ''}`}>{item.title}</p>
-                            {item.comment && <p className="comment">{item.comment}</p>}
+                    return (
+                        <div key={item.id} className={`list ${isInfo ? 'information' : ''}`}>
+                            {params.admin && (
+                                <>
+                                    <input type="checkbox" id={`check-${item.id}`} />
+                                    <label htmlFor={`check-${item.id}`}></label>
+                                </>
+                            )}
+
+                            <p className="number">{item.id}</p>
+                            <div className="title_wrap" onClick={() => onDetail(item.id)}>
+                                {item.tab && <p className="tage">{item.tab}</p>}
+                                {isSecret && <img src={Rock} alt="" />}
+                                <p className={`title ${isInfo ? 'information' : ''}`}>{item.title}</p>
+                            </div>
+                            {!hideWriter && <p className="writer">{item.writer}</p>}
+                            <p className="date">{item.created_at?.slice(2, 10).replace(/-/g, '.')}</p>
+                            <p className="watch">{item.views ?? 0}</p>
                         </div>
-                        {!hideWriter && <p className="writer">관리자A</p>}
-                        <p className="date">25.01.01</p>
-                        <p className="watch">0</p>
-                    </div>
-                ))}
-
+                    )
+                })}
             </div>
             <div className="go_write">
                 {params.admin ? (
@@ -67,11 +79,10 @@ const List = ({ params }) => {
                             <button>삭제하기</button>
                         </div>
                         <Link to={`/board_write/${params.number}/admin`}>글쓰기</Link>
-                    </>) : (
+                    </>
+                ) : (
                     <Link to={`/board_write/${params.number}`}>글쓰기</Link>
-
-                )
-                }
+                )}
             </div>
         </div>
     )

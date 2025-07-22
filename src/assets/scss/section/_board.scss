@@ -1,5 +1,6 @@
 .Board01_wrap {
     flex-direction: column;
+    padding: 30px 24px;
 
     >.top {
         margin-bottom: 50px;
@@ -24,7 +25,6 @@
 
             .click {
                 color: var(--black);
-                border-bottom: 2px solid var(--black);
 
                 strong {
                     font-weight: 500;
@@ -100,9 +100,10 @@
 
     .main {
         width: inherit;
-        max-width: 750px;
+        width: 100%;
 
         .list_wrap {
+            min-height: 390px;
 
             .top,
             .bottom {
@@ -180,6 +181,11 @@
                             font-size: 11px;
                         }
 
+                        .title {
+                            width: 80%;
+                            justify-content: left;
+                        }
+
                         .tage {
                             width: 10%;
                             border-radius: 50px;
@@ -190,6 +196,7 @@
 
                         img {
                             width: 15px;
+                            margin-right: 5px;
                         }
                     }
                 }
@@ -231,17 +238,23 @@
 }
 
 .Write_wrap {
+    padding: 30px 24px;
     flex-direction: column;
     justify-content: flex-start;
+    border-radius: 10px;
 
     input {
         width: 100%;
-        border: 1px solid var(--white01);
+        border: 1px solid var(--main);
         padding: 0 20px 2px;
         height: 45px;
         border-radius: 10px;
         margin-bottom: 10px;
         font-size: 15px;
+    }
+
+    .title {
+        border: 1px solid var(--white01);
     }
 
     .tage_wrap {
@@ -257,11 +270,12 @@
 
             button {
                 width: 50px;
-                height: 25px;
+                height: 24px;
                 border-radius: 5px;
                 border: 1px solid var(--white01);
                 font-size: 12px;
                 font-weight: 500;
+                padding-bottom: 1px;
             }
         }
 
@@ -278,7 +292,7 @@
         }
 
         .click {
-            border: 2px solid var(--main);
+            border: 1px solid var(--main);
         }
     }
 
@@ -298,7 +312,7 @@
 
         button {
             height: 35px;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 500;
             border-radius: 10px;
         }
@@ -364,7 +378,7 @@
     flex-direction: column;
     position: relative;
     justify-content: space-between;
-    padding: 20px 30px 0;
+    padding: 20px 30px;
 
     .detail_header {
         width: 100%;
@@ -458,10 +472,18 @@
                     border-bottom: 1px solid var(--white01);
                 }
 
-                p {
+                div {
                     padding: 15px 5px;
                     min-height: 200px;
                     border-bottom: 1px solid var(--white01);
+
+                    p {
+                        line-height: 150%;
+                    }
+
+                    ol {
+                        margin-left: 20px;
+                    }
                 }
             }
         }
@@ -509,7 +531,7 @@
                 height: 120px;
                 border-radius: 10px;
                 border: 1px solid var(--white01);
-                padding: 0px 20px 50px;
+                padding: 0px 20px 60px;
                 font-size: 14px;
             }
 
@@ -649,6 +671,7 @@
     align-items: center;
     flex-direction: column;
     position: relative;
+    padding: 30px 24px;
 
     >.top {
         width: 760px;
@@ -1098,4 +1121,28 @@
             margin: 3px 0;
         }
     }
+}
+
+.ql-toolbar.ql-snow {
+    border: none !important;
+    box-sizing: border-box;
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+
+    .ql-picker {}
+
+    .ql-clean {
+        display: none;
+    }
+}
+
+.ql-container.ql-snow {
+    border: none;
+}
+
+.ql-editor {
+    border: 1px solid var(--white01);
+    padding: 20px;
+    border-radius: 10px;
 }

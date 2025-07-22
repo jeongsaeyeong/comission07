@@ -29,12 +29,14 @@ body {
 }
 
 .container_main {
+    background-color: var(--white);
     display: flex;
     justify-content: center;
     align-items: center;
     width: 78vw;
     max-width: 840px;
     min-height: 570px;
+    border-radius: 10px;
 }
 
 #root {
@@ -56,6 +58,10 @@ button {
 
 ::-webkit-scrollbar {
     display: none;
+}
+
+em {
+    font-style: italic !important;
 }
 
 .none {
