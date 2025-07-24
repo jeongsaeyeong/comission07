@@ -479,6 +479,11 @@
 
                     p {
                         line-height: 150%;
+                        width: 100%;
+
+                        img {
+                            width: 100%;
+                        }
                     }
 
                     ol {
@@ -520,11 +525,20 @@
                     font-size: 14px;
                     min-height: 30px;
                 }
+
+                .comment_image {
+                    width: 300px;
+
+                    img {
+                        width: 100%;
+                    }
+                }
             }
         }
 
         .input_wrap {
             position: relative;
+            margin-bottom: 20px;
 
             >input {
                 width: 100%;
@@ -544,8 +558,21 @@
                 align-items: center;
                 bottom: 0;
 
+                div {
+                    display: flex;
+                    align-items: center;
+                }
+
                 input {
                     display: none;
+                }
+
+                label {
+                    margin-right: 8px;
+                }
+
+                p {
+                    font-size: 14px;
                 }
 
                 button {
@@ -679,7 +706,7 @@
 
         .notice_wrap {
             width: 100%;
-            height: 150px;
+            min-height: 150px;
             border-radius: 10px;
             margin-bottom: 30px;
             border: 1px solid var(--white01);
@@ -688,6 +715,7 @@
             justify-content: center;
             align-items: center;
             position: relative;
+            padding: 25px;
 
             h3 {
                 width: 50px;
@@ -707,6 +735,14 @@
                 font-size: 14px;
                 line-height: 150%;
                 text-align: center;
+
+                span {
+                    margin-bottom: 10px;
+                }
+
+                img {
+                    max-width: 70%;
+                }
             }
 
             >button {
@@ -727,6 +763,11 @@
                 outline: none;
                 resize: none;
                 font-size: 14px;
+            }
+
+            .file_name {
+                font-size: 14px;
+                margin-left: 8px;
             }
 
             .btn_box {
@@ -808,6 +849,7 @@
                     img {
                         width: 40px;
                         margin-bottom: 5px;
+                        border-radius: 500px;
                     }
 
                     .line {
@@ -857,12 +899,35 @@
                             cursor: pointer;
                         }
 
-                        >img {
-                            margin-bottom: 5px;
-                            position: relative;
-                            z-index: 5;
-                            cursor: pointer;
+                        .img_wrap {
+                            display: flex;
+
+                            img {
+                                width: 248px;
+                                height: 248px;
+                                margin-right: 6px;
+                                border-radius: 10px;
+                                object-fit: cover;
+                                object-position: center;
+                                margin-bottom: 5px;
+                                position: relative;
+                                z-index: 5;
+                                cursor: pointer;
+                            }
+
+                            .img_two {
+                                height: 248px;
+                                justify-content: space-between;
+                                display: flex;
+                                flex-direction: column;
+
+                                img {
+                                    height: 121px;
+                                    width: 248px;
+                                }
+                            }
                         }
+
 
                         button {
                             display: flex;
@@ -874,6 +939,10 @@
                         }
                     }
                 }
+            }
+
+            .reple {
+                background-color: #F9F9F9;
             }
 
             .comment {
@@ -965,6 +1034,66 @@
             }
         }
     }
+
+    .notice_pop {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: inherit;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding-top: 100px;
+
+        >div {
+            width: 530px;
+            min-height: 430px;
+            border-radius: 10px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background-color: var(--white);
+            z-index: 100;
+
+            h3 {
+                width: 50px;
+                height: 25px;
+                background-color: var(--white01);
+                border-radius: 50px;
+                font-size: 15px;
+                font-weight: 600;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding-bottom: 1px;
+                margin-bottom: 10px;
+            }
+
+            p {
+                font-size: 14px;
+                line-height: 150%;
+                text-align: center;
+                margin-bottom: 10px;
+
+                span {
+                    margin-bottom: 10px;
+                }
+            }
+
+            img {
+                max-width: 70%;
+            }
+
+            >button {
+                position: absolute;
+                right: 25px;
+                top: 25px;
+            }
+        }
+    }
 }
 
 .Write05_wrap {
@@ -1048,8 +1177,14 @@
                         width: 185px;
                         height: 185px;
                         border-radius: 10px;
-                        background-color: var(--white01);
                         margin-right: 10px;
+
+                        img {
+                            width: 100%;
+                            height: inherit;
+                            object-fit: cover;
+                            border-radius: 10px;
+                        }
                     }
                 }
 

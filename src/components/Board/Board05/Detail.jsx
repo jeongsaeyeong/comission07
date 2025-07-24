@@ -1,40 +1,71 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Back from '../../../assets/img/board/button_left.svg'
-import Exam from '../../../assets/img/board/example.png'
 import Picture from '../../../assets/img/board/button_picture.svg'
 import Pagenation from '../ETC/Pagenation'
 import ThreadItem from './ThreadItem'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
+
+const baseUrl = process.env.REACT_APP_API_BASE_URL
 
 const Detail = () => {
-    const [page, setPage] = useState(1);
-    const navigation = useNavigate();
+    const [page, setPage] = useState(1)
+    const [post, setPost] = useState(null)
+    const [comments, setComments] = useState([])
+    const navigation = useNavigate()
+    const params = useParams()
 
-    const onBack = () => {
-        navigation(-1)
-    }
+    const onBack = () => navigation(-1)
+
+    useEffect(() => {
+        const fetchPost = async () => {
+            try {
+                const res = await fetch(`${baseUrl}/board/get/get_post_detail.php?id=${params.id}`)
+                const data = await res.json()
+                if (data.success) {
+                    setPost(data.post)
+                } else {
+                    console.error(data.message)
+                }
+            } catch (err) {
+                console.error('게시글 불러오기 실패:', err)
+            }
+        }
+
+        const fetchComments = async () => {
+            try {
+                const res = await fetch(`${baseUrl}/board/get/get_comments_detail.php?post_id=${params.id}`)
+                const data = await res.json()
+                if (data.success) {
+                    setComments(data.comments)
+                } else {
+                    console.error(data.message)
+                }
+            } catch (err) {
+                console.error('댓글 불러오기 실패:', err)
+            }
+        }
+
+        fetchPost()
+        fetchComments()
+    }, [params.id])
 
     return (
         <div className='Detail05_wrap container_main Board05_wrap'>
             <div className="top">
-                <button onClick={() => { onBack() }} className="back"><img src={Back} alt="" /></button>
+                <button onClick={onBack} className="back"><img src={Back} alt="" /></button>
                 <Pagenation page={page} setPage={setPage} />
             </div>
             <div className="main">
-                <ThreadItem img={Exam} show={true} detail={true} />
-                <div className="input_wrap">
-                    <input type='text' id='comment' placeholder='댓글 작성하기' />
-                    <div className="btn_box">
-                        <input type="file" id='picture' />
-                        <label htmlFor="picture"><img src={Picture} alt="" /></label>
-                        <div>
-                            <input type="checkbox" id='check'/>
-                            <label htmlFor="check"></label>
-                            <p>민감한 내용</p>
-                            <button>등록</button>
-                        </div>
-                    </div>
-                </div>
+                {post && (
+                    <ThreadItem
+                        post={post}
+                        show={true}
+                        detail={true}
+                        nick={post.nickname}
+                        setNick={() => {}}
+                        comments={comments}
+                    />
+                )}
             </div>
         </div>
     )

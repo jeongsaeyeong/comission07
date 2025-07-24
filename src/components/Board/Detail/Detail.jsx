@@ -26,15 +26,26 @@ const Detail = () => {
         const fetchPost = async () => {
             try {
                 const res = await axios.get(`${baseUrl}/board/get/get_board_post.php`, {
-                    params: { id: params.id }
+                    params: {
+                        number: params.number,
+                        id: params.id
+                    }
                 });
 
                 if (res.data.success) {
                     setPost(res.data.post);
+                    console.log('res.data.post', res.data.post);
 
                     const type = res.data.post.open_type;
-                    if (type === 'notopen') setRock(true);
-                    else if (type === 'protect') setNeedpass(true);
+                    const username = localStorage.getItem('username');
+                    const isAdminOrOwner = username === 'admin' || username === res.data.post.writer;
+
+                    if (type === 'notopen' && !isAdminOrOwner) {
+                        setRock(true);
+                    } else if (type === 'protect' && !isAdminOrOwner) {
+                        setNeedpass(true);
+                    }
+
                 } else {
                     console.error('게시글 없음');
                 }
@@ -44,7 +55,7 @@ const Detail = () => {
         };
 
         fetchPost();
-    }, [params.id]);
+    }, [params.number, params.id]);
 
     const onBack = () => {
         navigation(-1);
@@ -56,7 +67,7 @@ const Detail = () => {
                 <button onClick={onBack} className='back'>
                     <img src={Back} alt="뒤로가기" />
                 </button>
-                {!(rock || needpass) && (
+                {!(rock || needpass) && post?.writer === localStorage.getItem('username') && (
                     <Manage manage={manage} setManage={setManage} />
                 )}
             </div>
@@ -64,12 +75,21 @@ const Detail = () => {
             {!(rock || needpass) && (
                 <>
                     <Show post={post} />
-                    <Pagenation setPage={setPage} page={page} />
+                    <Pagenation setPage={setPage} page={page} comment={true} />
                 </>
             )}
 
             {rock && <No_Show />}
-            {needpass && <Pass pass={pass} setPass={setPass} />}
+            {needpass && (
+                <Pass
+                    post={post}
+                    pass={pass}
+                    setPass={setPass}
+                    postId={params.id}
+                    boardNumber={String(params.number).padStart(2, '0')} // <-- 이거 추가
+                    setNeedpass={setNeedpass}
+                />
+            )}
         </div>
     )
 }

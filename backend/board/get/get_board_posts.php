@@ -18,10 +18,10 @@ if (!preg_match('/^[0-9]+$/', $board_number)) {
 $table = 'board' . str_pad($board_number, 2, '0', STR_PAD_LEFT) . '_posts';
 
 if ($tab && $tab !== 'all') {
-    $stmt = $conn->prepare("SELECT * FROM `$table` WHERE tab = ? AND open_type != 'notopen' ORDER BY id DESC");
+    $stmt = $conn->prepare("SELECT * FROM `$table` WHERE tab = ? ORDER BY id DESC");
     $stmt->bind_param("s", $tab);
 } else {
-    $stmt = $conn->prepare("SELECT * FROM `$table` WHERE open_type != 'notopen' ORDER BY id DESC");
+    $stmt = $conn->prepare("SELECT * FROM `$table` ORDER BY id DESC");
 }
 
 $stmt->execute();

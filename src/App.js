@@ -97,9 +97,11 @@ const App = () => {
                 <Route path='/board05' element={<Board05 />} />
                 <Route path='/board05/:admin' element={<Board05 />} />
                 <Route path='/board_write/:number' element={<Write />} />
+                <Route path='/board_write/:number/:id/:modify' element={<Write />} />
                 <Route path='/board_write/:number/:admin' element={<Write />} />
+                <Route path='/board_write/:number/:id/:modify/:admin' element={<Write />} />
                 <Route path='/board05/detail/:id' element={<Detail05 />} />
-                <Route path='/detail/:id' element={<Detail />} />
+                <Route path='/detail/:number/:id' element={<Detail />} />
 
                 {/* admin */}
 

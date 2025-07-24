@@ -26,6 +26,7 @@ const Write = () => {
     const [tabs, setTabs] = useState([])
     const [open, setOpen] = useState('open')
     const [title, setTitle] = useState('')
+    const [isNotice, setIsNotice] = useState(false)
     const [content, setContent] = useState('')
     const navigation = useNavigate()
 
@@ -46,6 +47,29 @@ const Write = () => {
         }
     }, [params.number])
 
+    useEffect(() => {
+        const fetchPost = async () => {
+            if (params.modify !== 'modify') return
+            try {
+                const res = await fetch(`${process.env.REACT_APP_API_BASE_URL}/board/get/get_board_post.php?number=${params.number}&id=${params.id}`)
+                const data = await res.json()
+                if (data.success) {
+                    const p = data.post
+                    setTitle(p.title)
+                    setContent(p.content)
+                    setOpen(p.open_type)
+                    setLong(p.tab || '')
+                    if (p.open_type === 'notice') setIsNotice(true)
+                }
+            } catch (err) {
+                console.error('게시글 불러오기 실패', err)
+            }
+        }
+
+        fetchPost()
+    }, [params.modify, params.number, params.id])
+
+
     const onUpload = async () => {
         const writer = localStorage.getItem('username')
         if (!writer) {
@@ -63,7 +87,7 @@ const Write = () => {
         formData.append('writer', writer)
         formData.append('title', title)
         formData.append('content', content)
-        formData.append('open', open)
+        formData.append('open', isNotice ? 'notice' : open)
         formData.append('tab', long)
 
         if (open === 'protect') {
@@ -75,25 +99,34 @@ const Write = () => {
             formData.append('password', password)
         }
 
+        // 수정이면 게시글 id도 함께 추가
+        if (params.modify === 'modify') {
+            formData.append('post_id', params.id)
+        }
+
+        const endpoint = params.modify === 'modify'
+            ? `${process.env.REACT_APP_API_BASE_URL}/board/write/update.php`
+            : `${process.env.REACT_APP_API_BASE_URL}/board/write/upload.php`
+
         try {
-            const res = await fetch(`${process.env.REACT_APP_API_BASE_URL}/board/write/upload.php`, {
+            const res = await fetch(endpoint, {
                 method: 'POST',
                 body: formData,
             });
 
-            const text = await res.text(); // JSON으로 파싱 시도 X
-            console.log('서버 응답 원문:', text); // 👈 진짜 뭐가 오는지 확인
+            const text = await res.text()
+            console.log('서버 응답 원문:', text)
+            const data = JSON.parse(text)
 
-            const data = JSON.parse(text); // 그 다음 파싱 시도
             if (data.success) {
-                alert('업로드 완료');
-                navigation(`/board/${params.number}`);
+                alert(params.modify === 'modify' ? '수정 완료' : '업로드 완료')
+                navigation(`/board/${params.number}`)
             } else {
-                alert(data.message || '업로드 실패');
+                alert(data.message || '작업 실패')
             }
         } catch (err) {
-            console.error('업로드 실패:', err);
-            alert('서버 오류가 발생했습니다.');
+            console.error('업로드 실패:', err)
+            alert('서버 오류가 발생했습니다.')
         }
     }
 
@@ -113,21 +146,31 @@ const Write = () => {
             <div className="tage_wrap">
                 {params.number === '01' &&
                     <div className="left">
-                        {tabs.map(tab => (
-                            <button
-                                key={tab}
-                                onClick={() => setLong(tab)}
-                                className={long === tab ? 'click' : ''}
-                            >
-                                {tab}
-                            </button>
-                        ))}
+                        {!isNotice && (
+                            <>
+                                {
+                                    tabs.map(tab => (
+                                        <button
+                                            key={tab}
+                                            onClick={() => setLong(tab)}
+                                            className={long === tab ? 'click' : ''}
+                                        >
+                                            {tab}
+                                        </button>
+                                    ))
+                                }
+                            </>
+                        )}
                     </div>
                 }
                 <div className="right">
-                    <button onClick={() => setOpen('open')} className={open === 'open' ? 'click' : ''}>공개</button>
-                    <button onClick={() => setOpen('notopen')} className={open === 'notopen' ? 'click' : ''}>비공개</button>
-                    <button onClick={() => setOpen('protect')} className={open === 'protect' ? 'click' : ''}>보호글</button>
+                    {!isNotice && (
+                        <>
+                            <button onClick={() => setOpen('open')} className={open === 'open' ? 'click' : ''}>공개</button>
+                            <button onClick={() => setOpen('notopen')} className={open === 'notopen' ? 'click' : ''}>비공개</button>
+                            <button onClick={() => setOpen('protect')} className={open === 'protect' ? 'click' : ''}>보호글</button>
+                        </>
+                    )}
                 </div>
             </div>
 
@@ -145,15 +188,20 @@ const Write = () => {
             <div className="btn_wrap">
                 <button className='nope' onClick={onBack}>취소</button>
                 <div>
-                    {params.admin &&
+                    {params.admin && (
                         <div className='notice'>
-                            <input type="checkbox" id="check" />
+                            <input
+                                type="checkbox"
+                                id="check"
+                                checked={isNotice}
+                                onChange={(e) => setIsNotice(e.target.checked)}
+                            />
                             <label htmlFor="check"></label>
                             <p>공지로 설정</p>
                         </div>
-                    }
+                    )}
                     {open === 'protect' && (<input type='password' placeholder='비밀번호 작성' />)}
-                    <button className='upload' onClick={onUpload}>업로드</button>
+                    <button className='upload' onClick={onUpload}>{params.modify === 'modify' ? '수정' : '업로드'}</button>
                 </div>
             </div>
         </div>

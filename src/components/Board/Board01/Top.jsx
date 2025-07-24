@@ -4,16 +4,19 @@ import axios from 'axios'
 
 const baseUrl = process.env.REACT_APP_API_BASE_URL
 
-const Top = ({ params, setClick, click }) => {
+const Top = ({ type, params, setClick, click, keyword, setKeyword, setType }) => {
     const [tabs, setTabs] = useState({})
     const [total, setTotal] = useState(0)
+
+    const onSearch = () => {
+        setClick('search')
+    }
 
     useEffect(() => {
         const fetchTabs = async () => {
             try {
                 const res = await axios.get(`${baseUrl}/setting/board/get_board_tabs.php?menu=menu1`)
                 if (res.data) {
-                    console.log(res.data)
                     setTabs(res.data.tabs || {})
                     setTotal(res.data.total || 0)
                 }
@@ -25,6 +28,11 @@ const Top = ({ params, setClick, click }) => {
         if (params.number === '01') {
             fetchTabs()
         }
+    }, [params.number])
+
+    useEffect(() => {
+        setKeyword('')
+        setType('title')
     }, [params.number])
 
     return (
@@ -47,15 +55,20 @@ const Top = ({ params, setClick, click }) => {
             }
             <div className="search_wrap">
                 <div className="cate">
-                    <select>
+                    <select value={type} onChange={(e) => setType(e.target.value)}>
                         <option value="title">제목</option>
                         <option value="writer">작성자</option>
                     </select>
                     <img src={Down} alt="" />
                 </div>
                 <div className="search">
-                    <input type="text" placeholder='검색어' />
-                    <button>검색</button>
+                    <input
+                        type="text"
+                        value={keyword}
+                        onChange={(e) => setKeyword(e.target.value)}
+                        placeholder='검색어'
+                    />
+                    <button onClick={onSearch}>검색</button>
                 </div>
             </div>
         </div>

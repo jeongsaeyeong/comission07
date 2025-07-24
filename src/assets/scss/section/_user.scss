@@ -2,8 +2,7 @@
     flex-direction: column;
 
     .img {
-        width: 440px;
-        background-color: var(--white01);
+        width: 343px;
         border: 0;
         margin-bottom: 20px;
 
@@ -21,9 +20,9 @@
         flex-direction: column;
 
         input {
-            padding: 0 23px;
-            width: 440px;
-            height: 45px;
+            padding: 13px;
+            width: 343px;
+            height: 44px;
             border-radius: 5px;
             margin-bottom: 10px;
             border: 1px solid var(--white01);
@@ -34,8 +33,8 @@
         }
 
         button {
-            margin-top: 20px;
-            width: 440px;
+            margin-top: 10px;
+            width: 343px;
             height: 45px;
             border-radius: 5px;
             color: var(--white);
@@ -50,14 +49,14 @@
     }
 
     .link_box {
-        width: 440px;
+        width: 343px;
         display: flex;
         justify-content: space-between;
         align-items: center;
 
         a {
             font-weight: 500;
-            font-size: 16px;
+            font-size: 15px;
             color: var(--black);
             letter-spacing: -0.8px;
         }
@@ -65,7 +64,7 @@
 
     >a,
     .go_home {
-        width: 440px;
+        width: 343px;
         height: 45px;
         border-radius: 5px;
         color: var(--white);
@@ -92,17 +91,17 @@
     margin-bottom: 76px;
 
     h1 {
-        font-size: 26px;
+        font-size: 20px;
         font-weight: 700;
-        margin-bottom: 25px;
+        margin-bottom: 35px;
     }
 
     .input_box {
-        margin-bottom: 25px;
+        margin-bottom: 15px;
 
         h3 {
             font-weight: 700;
-            font-size: 16px;
+            font-size: 15px;
             color: var(--black);
             margin-bottom: 15px;
         }
@@ -141,7 +140,7 @@
     }
 
     button {
-        width: 440px;
+        width: 343px;
         height: 45px;
         border-radius: 5px;
         color: var(--white);
